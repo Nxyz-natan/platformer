@@ -1,6 +1,8 @@
 extends Node2D
-var score: int = 1
+var score: int = 0
 var level: int = 1
+@onready var scorelabel: Label = $HUD/score/scorelabel
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_setup_level()
@@ -15,7 +17,7 @@ func _setup_level() -> void:
 	if exit:
 		exit.body_entered.connect(_on_exit_body_entered)
 	#connect apples
-	var apples = $".".get_node_or_null("aplles")
+	var apples = $".".get_node_or_null("apples")
 	if apples:
 		for apple in apples.get_children():
 			apple.collected.connect(increase_score)
@@ -34,10 +36,12 @@ func _on_exit_body_entered(body: Node2D) -> void:
 
 func _on_player_died(body):
 	body.die()
+	await get_tree().create_timer(1.0).timeout
+	get_tree().reload_current_scene()
 	print("Player Killed")
 
 
 func increase_score() -> void:
 	score +=1
-	print(score)
+	scorelabel.text = "SCORE : %s" % score
 	

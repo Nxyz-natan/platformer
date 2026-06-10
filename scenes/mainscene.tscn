@@ -25,6 +25,7 @@
 [ext_resource type="Script" uid="uid://duf4pxkn4nt0a" path="res://scenes/apple_2.gd" id="24_q3hll"]
 [ext_resource type="Script" uid="uid://uw7x5kuuxuet" path="res://scenes/apple_3.gd" id="25_gejso"]
 [ext_resource type="Script" uid="uid://jwnx2jftpnn" path="res://scenes/apple_4.gd" id="26_3ou18"]
+[ext_resource type="FontFile" uid="uid://b6c36rutt6cf1" path="res://fonts/Square-Black.ttf" id="26_wkmvq"]
 
 [sub_resource type="Curve" id="Curve_mo382"]
 _data = [Vector2(0.0024875626, 1), 0.0, 0.0, 0, 0, Vector2(0.4129353, 0.9286016), 0.0, 0.0, 0, 0, Vector2(0.7338308, 0.77207434), 0.0, 0.0, 0, 0, Vector2(1, 0.48648077), 0.0, 0.0, 0, 0]
@@ -1027,6 +1028,15 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_m12on"]
 radius = 6.3420997
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jj3vu"]
+bg_color = Color(0.81546634, 0.55112815, 0.9387629, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_detail = 5
+shadow_size = 5
+
 [node name="mainscene" type="Node2D" unique_id=1375243092]
 script = ExtResource("1_owwh3")
 
@@ -1048,13 +1058,13 @@ dash_speed = 800.0
 dash_curve = SubResource("Curve_mo382")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1459886245]
-position = Vector2(1844, -415)
+position = Vector2(831, -122)
 shape = SubResource("RectangleShape2D_4c2fu")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player" unique_id=431427894]
 texture_filter = 1
-position = Vector2(1843, -447)
+position = Vector2(830, -154)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_golqe")
 animation = &"idle"
@@ -1218,11 +1228,40 @@ autoplay = "default"
 position = Vector2(157.66667, 179.00002)
 shape = SubResource("CircleShape2D_m12on")
 
+[node name="HUD" type="CanvasLayer" parent="." unique_id=744029939]
+
+[node name="score" type="Panel" parent="HUD" unique_id=1256470819]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = 20.0
+offset_right = 80.0
+offset_bottom = 70.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jj3vu")
+
+[node name="scorelabel" type="Label" parent="HUD/score" unique_id=691167864]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -57.5
+offset_top = -16.0
+offset_right = 57.5
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("26_wkmvq")
+theme_override_font_sizes/font_size = 32
+text = "SCORE : 0"
+
 [connection signal="body_entered" from="enemy/Snail" to="enemy/Snail" method="_on_body_entered"]
 [connection signal="body_entered" from="enemy/Snail2" to="enemy/Snail2" method="_on_body_entered"]
 [connection signal="timeout" from="enemy/Snail2/Timer" to="enemy/Snail" method="_on_timer_timeout"]
 [connection signal="timeout" from="enemy/Snail2/Timer" to="enemy/Snail2" method="_on_timer_timeout"]
-[connection signal="body_entered" from="Exit" to="." method="_on_exit_body_entered"]
 [connection signal="body_entered" from="apples/apple" to="apples/apple" method="_on_body_entered"]
 [connection signal="body_entered" from="apples/apple2" to="apples/apple2" method="_on_body_entered"]
 [connection signal="body_entered" from="apples/apple3" to="apples/apple3" method="_on_body_entered"]
